@@ -188,16 +188,16 @@ class RegistrazioneForm extends Form
                         'allow' => \Zend\Validator\Hostname::ALLOW_DNS,
                         'useMxCheck'    => false,
                     ],
-                    'name' => 'Zend\Validator\Db\NoRecordExists',
-                    'options' => [
-                        'table' => 'utenti',
-                        'field' => 'email',
-                        'adapter' => $this->dbAdapter,
-                        'exclude' => array(
-                            'field' => 'email',
-                            'value' => $this->email,
-                        ),
-                    ],
+                    // 'name' => 'Zend\Validator\Db\NoRecordExists',
+                    // 'options' => [
+                    //     'table' => 'utenti',
+                    //     'field' => 'email',
+                    //     'adapter' => Zend\Db\TableGateway\Feature\GlobalAdapterFeature::getStaticAdapter(),
+                    //     'exclude' => array(
+                    //         'field' => 'email',
+                    //         'value' => $this->email,
+                    //     ),
+                    // ],
                 ],
             ],
         ]);

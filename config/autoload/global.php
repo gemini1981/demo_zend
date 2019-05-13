@@ -20,7 +20,7 @@ return [
             ],
             [
                 'label' => 'Registrazione',
-                'route' => 'registrazione',            
+                'route' => 'registrazione',
             ],
             /*
             [
@@ -39,5 +39,9 @@ return [
                 'route' => 'home',
             ],
         ],
+    ],
+    'db' => [
+        'driver'         => 'Pdo',
+        'dsn'            => 'mysql:dbname=demo;host=localhost',
     ],
 ];

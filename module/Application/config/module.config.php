@@ -10,6 +10,7 @@ namespace Application;
 use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
 use Zend\ServiceManager\Factory\InvokableFactory;
+use Zend\Db\Adapter\AdapterAbstractServiceFactory;
 
 return [
     'router' => [
@@ -50,6 +51,18 @@ return [
         'factories' => [
             Controller\IndexController::class => InvokableFactory::class,
             Controller\RegistrazioneController::class => InvokableFactory::class,
+        ],
+    ],
+    'service_manager' => [
+        'factories' => [
+            'Zend\Db\Adapter\Adapter' => function ($serviceManager) {
+                $adapterFactory = new Zend\Db\Adapter\AdapterServiceFactory();
+                $adapter = $adapterFactory->createService($serviceManager);
+
+                \Zend\Db\TableGateway\Feature\GlobalAdapterFeature::setStaticAdapter($adapter);
+
+                return $adapter;
+            }
         ],
     ],
     'view_manager' => [

@@ -14,7 +14,7 @@ use Zend\Session\Container;
 
 class RegistrazioneController extends AbstractActionController
 {
-    
+
 
     public function indexAction()
     {
