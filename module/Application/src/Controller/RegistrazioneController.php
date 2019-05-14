@@ -33,14 +33,6 @@ class RegistrazioneController extends AbstractActionController
                 // Ritorna i dat validati
                 $data = $form->getData();
 
-                // If we completed all 3 steps, redirect to Review page.
-
-                // return $this->redirect()->toRoute(
-                //     'registration',
-                //     ['action' => 'review']
-                // );
-
-                // Go to the next step.
                 return $this->redirect()->toRoute('registration');
             }
         }
@@ -49,17 +41,6 @@ class RegistrazioneController extends AbstractActionController
             'form' => $form
         ]);
 
-
-        // $validator = new \Zend\Validator\Db\NoRecordExists(
-        //     array(
-        //         'table' => 'users',
-        //         'field' => 'username',
-        //         'exclude' => array(
-        //             'field' => 'id',
-        //             'value' => $user_id
-        //         )
-        //     )
-        // );
         return $viewModel;
     }
 }

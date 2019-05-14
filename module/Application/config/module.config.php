@@ -54,16 +54,7 @@ return [
         ],
     ],
     'service_manager' => [
-        'factories' => [
-            'Zend\Db\Adapter\Adapter' => function ($serviceManager) {
-                $adapterFactory = new Zend\Db\Adapter\AdapterServiceFactory();
-                $adapter = $adapterFactory->createService($serviceManager);
-
-                \Zend\Db\TableGateway\Feature\GlobalAdapterFeature::setStaticAdapter($adapter);
-
-                return $adapter;
-            }
-        ],
+        'factories' => [],
     ],
     'view_manager' => [
         'display_not_found_reason' => true,
