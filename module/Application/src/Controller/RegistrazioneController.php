@@ -10,15 +10,21 @@ namespace Application\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Application\Form\RegistrazioneForm;
-use Zend\Session\Container;
+use Zend\Db\Adapter\Adapter;
 
 class RegistrazioneController extends AbstractActionController
 {
 
+    private $db;
+
+    public function __construct($container)
+    {
+        $this->db = $container->get(\Zend\Db\Adapter\Adapter::class);
+    }
 
     public function indexAction()
     {
-        $form = new RegistrazioneForm();
+        $form = new RegistrazioneForm($this->db);
 
         if ($this->getRequest()->isPost()) {
 
@@ -33,7 +39,7 @@ class RegistrazioneController extends AbstractActionController
                 // Ritorna i dat validati
                 $data = $form->getData();
 
-                return $this->redirect()->toRoute('registration');
+                return $this->redirect()->toRoute('registrazione');
             }
         }
 
@@ -41,6 +47,8 @@ class RegistrazioneController extends AbstractActionController
             'form' => $form
         ]);
 
+        $result = $this->db->query('SELECT * FROM `utenti`', Adapter::QUERY_MODE_EXECUTE);
+        echo $result->count();
         return $viewModel;
     }
 }

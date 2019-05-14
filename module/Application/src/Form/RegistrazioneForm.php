@@ -5,7 +5,6 @@
 namespace Application\Form;
 
 use Zend\Form\Form;
-use Zend\InputFilter\InputFilter;
 
 /**
  * This form is used to collect user's personal information and address.
@@ -13,13 +12,18 @@ use Zend\InputFilter\InputFilter;
  */
 class RegistrazioneForm extends Form
 {
+
+    protected $db;
+
     /**
      * Constructor.     
      */
-    public function __construct()
+    public function __construct($db)
     {
         // Define form name
         parent::__construct('registrazione-form');
+
+        $this->db = $db;
 
         // Set POST method for this form
         $this->setAttribute('method', 'post');
@@ -188,16 +192,16 @@ class RegistrazioneForm extends Form
                         'allow' => \Zend\Validator\Hostname::ALLOW_DNS,
                         'useMxCheck'    => false,
                     ],
-                    // 'name' => 'Zend\Validator\Db\NoRecordExists',
-                    // 'options' => [
-                    //     'table' => 'utenti',
-                    //     'field' => 'email',
-                    //     'adapter' => Zend\Db\TableGateway\Feature\GlobalAdapterFeature::getStaticAdapter(),
-                    //     'exclude' => array(
-                    //         'field' => 'email',
-                    //         'value' => $this->email,
-                    //     ),
-                    // ],
+                    'name' => 'Zend\Validator\Db\NoRecordExists',
+                    'options' => [
+                        'table' => 'utenti',
+                        'field' => 'email',
+                        'adapter' => $this->db,
+                        'exclude' => array(
+                            'field' => 'email',
+                            'value' => ['email'],
+                        ),
+                    ],
                 ],
             ],
         ]);

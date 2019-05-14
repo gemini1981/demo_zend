@@ -10,7 +10,7 @@ namespace Application;
 use Zend\Router\Http\Literal;
 use Zend\Router\Http\Segment;
 use Zend\ServiceManager\Factory\InvokableFactory;
-use Zend\Db\Adapter\AdapterAbstractServiceFactory;
+use Zend\Db\Adapter\Adapter;
 
 return [
     'router' => [
@@ -50,11 +50,15 @@ return [
     'controllers' => [
         'factories' => [
             Controller\IndexController::class => InvokableFactory::class,
-            Controller\RegistrazioneController::class => InvokableFactory::class,
+            Controller\RegistrazioneController::class => function ($container) {
+                return new Controller\RegistrazioneController($container);
+            },
         ],
     ],
     'service_manager' => [
-        'factories' => [],
+        'factories' => [
+            'Zend\Db\Adapter\Adapter' => 'Zend\Db\Adapter\AdapterServiceFactory',
+        ],
     ],
     'view_manager' => [
         'display_not_found_reason' => true,
