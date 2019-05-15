@@ -14,30 +14,13 @@
 return [
     'navigation' => [
         'default' => [
-            [
-                'label' => 'Home',
-                'route' => 'home',
-            ],
-            [
-                'label' => 'Registrazione',
-                'route' => 'registrazione',
-            ],
-            /*
-            [
-                'label' => 'Login',
-                'route' => 'login',
-            ],
-            */
+            ['label' => 'Home', 'route' => 'home',],
+            ['label' => 'Registrazione', 'route' => 'registrazione',],
+            // ['label' => 'Login', 'route' => 'home',],
         ],
         'login' => [
-            [
-                'label' => 'Home',
-                'route' => 'home',
-            ],
-            [
-                'label' => 'logout',
-                'route' => 'home',
-            ],
+            ['label' => 'Home', 'route' => 'home',],
+            ['label' => 'Logout', 'route' => 'home',],
         ],
     ],
     'db' => [
