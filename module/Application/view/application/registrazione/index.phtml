@@ -34,6 +34,7 @@ $form->prepare();
 
 <h1>Registrazione Utente</h1>
 
+<?php if ($this->message) : ?><b><?= $this->message; ?></b><br><?php endif; ?>
 <div class="row">
 	<div class="col-md-6">
 		<?= $this->form()->openTag($form); ?>

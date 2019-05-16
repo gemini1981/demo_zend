@@ -24,7 +24,8 @@
         "zendframework/zend-i18n": "^2.9",
         "zendframework/zend-validator": "^2.12",
         "zendframework/zend-db": "^2.10",
-        "zendframework/zend-cache": "^2.8"
+        "zendframework/zend-cache": "^2.8",
+        "zendframework/zend-crypt": "^3.3"
     },
     "autoload": {
         "psr-4": {

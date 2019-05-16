@@ -3,7 +3,7 @@ namespace Application\Model;
 
 use Application\Model\AbstractTable;
 use Application\Model\AbstractModel;
-// use Login\Security\Password;
+
 // use Zend\Hydrator\ClassMethods;
 // use Zend\Db\ResultSet\HydratingResultSet;
 // use Zend\Db\Adapter\Adapter;
@@ -11,18 +11,21 @@ use Application\Model\AbstractModel;
 
 class UtentiTable extends AbstractTable
 {
+    use \Application\Traits\PasswordTrait;
 
     public static $tableName = 'utenti';
-    public static $identityCol = 'email';
-    public static $passwordCol = 'password';
+
     public function findByEmail($email)
     {
         return $this->tableGateway->select(['email' => $email])->current();
     }
     public function save(AbstractModel $user)
     {
+        // var_dump($user);
+        // var_dump($user->extract());
+        // die;
         $password = $user->getPassword();
-        $user->setPassword(Password::createHash($password));
+        $user->setPassword(self::createHash($password));
         return $this->tableGateway->insert($user->extract());
     }
 }

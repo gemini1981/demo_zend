@@ -18,6 +18,9 @@ class RegistrazioneController extends AbstractActionController
     use \Application\Traits\DatabaseTrait;
     use \Application\Traits\UtentiTableTrait;
 
+    const REG_SUCCESS   = '<b style="color:green;">Registration was successful</b>';
+    const REG_FAIL      = '<b style="color:red;">Registration failed</b>';
+
     public function indexAction()
     {
         $form = new RegistrazioneForm($this->database);
@@ -27,8 +30,7 @@ class RegistrazioneController extends AbstractActionController
             // preleva i dati dal POST
             $data = $this->params()->fromPost();
 
-            // $form->bind(new Utente());
-
+            // $form->bind(new Utente($data));
             $form->setData($data);
 
             // Valida i dati
@@ -36,27 +38,26 @@ class RegistrazioneController extends AbstractActionController
 
                 // Ritorna i dat validati
                 $data = $form->getData();
+                $user= new Utente($data);
 
-                print_r($data);
+                if ($this->table->save($user)) {
+                    $message = self::REG_SUCCESS;
+                } else {
+                    $message = self::REG_FAIL . '<br>' . implode('<br>', $this->database->getMessages());
+                }
 
-                //    if ($this->table->save($user)) {
-                //         $message = self::REG_SUCCESS;
-                //     } else {
-                //         $message = self::REG_FAIL . '<br>' . implode('<br>', $result->getMessages());
-                //     }
-
-                return $this->redirect()->toRoute('registrazione');
+                // return $this->redirect()->toRoute('login');
             }
         }
 
+        // $result = $this->database->query('SELECT * FROM `utenti`', Adapter::QUERY_MODE_EXECUTE);
+        // print_r($result->current()->email);
+        // echo $result->count();
+
         $viewModel = new ViewModel([
-            'form' => $form
+            'form'      => $form,
+            'message'   => $message,
         ]);
-
-        $result = $this->database->query('SELECT * FROM `utenti`', Adapter::QUERY_MODE_EXECUTE);
-        print_r($result->current()->email);
-
-        echo $result->count();
         return $viewModel;
     }
 }

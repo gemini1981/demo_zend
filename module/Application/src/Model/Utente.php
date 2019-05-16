@@ -6,10 +6,10 @@ use Application\Model\AbstractModel;
 class Utente extends AbstractModel
 {
     protected $mapping = [
-        'id'        => '',
-        'email'     => '',
-        'password'  => '',
-        'nome'      => '',
-        'cognome'   => '',
+        'id'        => 'id',
+        'email'     => 'email',
+        'password'  => 'password',
+        'nome'      => 'nome',
+        'cognome'   => 'cognome',
     ];
 }

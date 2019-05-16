@@ -16,7 +16,7 @@ return [
         'default' => [
             ['label' => 'Home', 'route' => 'home',],
             ['label' => 'Registrazione', 'route' => 'registrazione',],
-            // ['label' => 'Login', 'route' => 'home',],
+            ['label' => 'Login', 'route' => 'login',],
         ],
         'login' => [
             ['label' => 'Home', 'route' => 'home',],
