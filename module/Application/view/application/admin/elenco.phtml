@@ -9,6 +9,7 @@
             <th>Premio</th>
             <th>Tipo</th>
             <th>&nbsp;</th>
+            <th>&nbsp;</th>
         </tr>
     </thead>
     <tbody>
@@ -22,6 +23,7 @@
                 <td><?= $polizza['data_scadenza']; ?></td>
                 <td><?= $polizza['premio']; ?></td>
                 <td><?= $polizza['tipo']; ?></td>
+                <td><a href="<?= $this->url('admin') ?>/dettaglio/<?= $polizza['id']; ?>">dettaglio</a></td>
                 <td><a href="<?= $this->url('admin') ?>/modifica/<?= $polizza['id']; ?>">modifica</a></td>
             </tr>
         <?php endforeach; ?>

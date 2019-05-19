@@ -4,13 +4,13 @@ namespace Application\Model;
 use Application\Model\AbstractTable;
 use Application\Model\AbstractModel;
 
-class PolizzeTable extends AbstractTable
+class PolizzeAutoTable extends AbstractTable
 {
-    public static $tableName = 'polizze';
+    public static $tableName = 'polizze_auto';
 
-    public function findByIdUtente($id_utente)
+    public function findByIdPolizza($id_polizza)
     {
-        return $this->tableGateway->select(['id_utente' => $id_utente]);
+        return $this->tableGateway->select(['id_polizza' => $id_polizza])->current();
     }
     public function save(AbstractModel $polizza)
     {

@@ -113,6 +113,8 @@ return [
             Form\LoginForm::class => Form\Factory\LoginFormFactory::class,
             Model\UtentiTable::class => Model\Factory\UtentiTableFactory::class,
             Model\PolizzeTable::class => Model\Factory\PolizzeTableFactory::class,
+            Model\PolizzeCasaTable::class => Model\Factory\PolizzeCasaTableFactory::class,
+            Model\PolizzeAutoTable::class => Model\Factory\PolizzeAutoTableFactory::class,
             \Zend\Authentication\AuthenticationService::class => Service\Factory\AuthenticationServiceFactory::class,
             Service\AuthAdapter::class => Service\Factory\AuthAdapterFactory::class,
             Service\AuthManager::class => Service\Factory\AuthManagerFactory::class,

@@ -1,0 +1,65 @@
+<h1>Polizza - dettaglio</h1>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="col-md-3"><b>Numero</b></div>
+        <div class="col-md-9"><?= $this->polizza['numero']; ?></div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-3"><b>Compagnia</b></div>
+        <div class="col-md-9"><?= $this->polizza['compagnia']; ?></div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-3"><b>Data emissione</b></div>
+        <div class="col-md-9"><?= $this->polizza['data_emissione']; ?></div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-3"><b>Data scadenza</b></div>
+        <div class="col-md-9"><?= $this->polizza['data_scadenza']; ?></div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-3"><b>Premio</b></div>
+        <div class="col-md-9"><?= $this->polizza['premio']; ?></div>
+    </div>
+    <div class="col-md-12">
+        <div class="col-md-3"><b>Tipo</b></div>
+        <div class="col-md-9"><?= $this->polizza['tipo']; ?></div>
+    </div>
+</div>
+
+<p>Dati extra</p>
+<div class="row">
+    <?php if ($this->polizza['tipo'] == 'casa') : ?>
+        <div class="col-md-12">
+            <div class="col-md-3"><b>Città</b></div>
+            <div class="col-md-9"><?= $this->polizza_extra['citta']; ?></div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-3"><b>Cap</b></div>
+            <div class="col-md-9"><?= $this->polizza_extra['cap']; ?></div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-3"><b>Indirizzo</b></div>
+            <div class="col-md-9"><?= $this->polizza_extra['indirizzo']; ?></div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-3"><b>Civico</b></div>
+            <div class="col-md-9"><?= $this->polizza_extra['civico']; ?></div>
+        </div>
+    <?php endif ?>
+    <?php if ($this->polizza['tipo'] == 'auto') : ?>
+        <div class="col-md-12">
+            <div class="col-md-3"><b>Marca</b></div>
+            <div class="col-md-9"><?= $this->polizza_extra['marca']; ?></div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-3"><b>Modello</b></div>
+            <div class="col-md-9"><?= $this->polizza_extra['modello']; ?></div>
+        </div>
+        <div class="col-md-12">
+            <div class="col-md-3"><b>Targa</b></div>
+            <div class="col-md-9"><?= $this->polizza_extra['targa']; ?></div>
+        </div>
+    <?php endif ?>
+
+</div>

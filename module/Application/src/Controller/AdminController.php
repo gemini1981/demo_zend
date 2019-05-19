@@ -69,10 +69,32 @@ class AdminController extends AbstractActionController
 
     public function modificaAction()
     {
-        $id_polizza = $this->params()->fromRoute('id');
-        echo $id_polizza;
+        $id = $this->params()->fromRoute('id');
+
+        echo $id;
     }
 
-    public function dettaglioAction($id_polizza)
-    { }
+    public function dettaglioAction()
+    {
+        $id = $this->params()->fromRoute('id');
+        $polizza = $this->PolizzeTable->findById($id);
+        $polizza_extra = [];
+        if ($polizza) {
+            $polizza = $polizza->extract();
+            switch ($polizza['tipo']) {
+                case 'casa':
+                    $polizza_extra = $this->PolizzeCasaTable->findByIdPolizza($id)->extract();
+                    break;
+                case 'auto':
+                    $polizza_extra = $this->PolizzeAutoTable->findByIdPolizza($id)->extract();
+                    break;
+            }
+        }
+
+        $viewModel = new ViewModel([
+            'polizza' => $polizza,
+            'polizza_extra' => $polizza_extra,
+        ]);
+        return $viewModel;
+    }
 }
