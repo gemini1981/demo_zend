@@ -65,6 +65,7 @@ return [
     ],
     'service_manager' => [
         'factories' => [
+            Form\RegistrazioneForm::class => Form\Factory\RegistrazioneFormFactory::class,
             Model\UtentiTable::class => Model\Factory\UtentiTableFactory::class,
         ],
     ],

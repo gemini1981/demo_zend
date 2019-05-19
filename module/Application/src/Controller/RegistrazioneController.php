@@ -9,9 +9,8 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Application\Form\RegistrazioneForm;
-use Zend\Db\Adapter\Adapter;
 use Application\Model\Utente;
+use Application\Form\RegistrazioneForm;
 
 class RegistrazioneController extends AbstractActionController
 {
@@ -21,23 +20,27 @@ class RegistrazioneController extends AbstractActionController
     const REG_SUCCESS   = '<b style="color:green;">Registration was successful</b>';
     const REG_FAIL      = '<b style="color:red;">Registration failed</b>';
 
+    protected $formRegistrazione;
+
+    public function setFormRegistrazione(RegistrazioneForm $form)
+    {
+        $this->formRegistrazione = $form;
+    }
+
     public function indexAction()
     {
-        $form = new RegistrazioneForm($this->database);
-
         if ($this->getRequest()->isPost()) {
 
             // preleva i dati dal POST
             $data = $this->params()->fromPost();
 
-            // $form->bind(new Utente($data));
-            $form->setData($data);
+            $this->formRegistrazione->setData($data);
 
             // Valida i dati
-            if ($form->isValid()) {
+            if ($this->formRegistrazione->isValid()) {
 
                 // Ritorna i dat validati
-                $data = $form->getData();
+                $data = $this->formRegistrazione->getData();
                 $user= new Utente($data);
 
                 if ($this->table->save($user)) {
@@ -55,7 +58,7 @@ class RegistrazioneController extends AbstractActionController
         // echo $result->count();
 
         $viewModel = new ViewModel([
-            'form'      => $form,
+            'form'      => $this->formRegistrazione,
             'message'   => $message,
         ]);
         return $viewModel;
