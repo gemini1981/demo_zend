@@ -10,7 +10,7 @@
  * control, so do not include passwords or other sensitive information in this
  * file.
  */
-
+use Zend\Session\Storage\SessionArrayStorage;
 return [
     'navigation' => [
         'default' => [
@@ -26,5 +26,12 @@ return [
     'db' => [
         'driver'         => 'Pdo',
         'dsn'            => 'mysql:dbname=demo;host=localhost',
+    ],
+    'session_storage' => [
+        'type' => SessionArrayStorage::class
+    ],
+    'session_config' => [
+        'cookie_lifetime'     => 60*60*1, 
+        'gc_maxlifetime'      => 60*60*24*30,        
     ],
 ];

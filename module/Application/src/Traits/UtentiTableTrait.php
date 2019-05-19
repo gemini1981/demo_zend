@@ -5,9 +5,10 @@ use Application\Model\UtentiTable;
 
 trait UtentiTableTrait
 {
-    protected $table;
-    public function setTable(UtentiTable $table)
+    protected $UtentiTable;
+
+    public function setUtentiTable(UtentiTable $table)
     {
-        $this->table = $table;
+        $this->UtentiTable = $table;
     }
 }

@@ -14,7 +14,7 @@ class RegistrazioneControllerFactory implements FactoryInterface
     {
         $controller = new RegistrazioneController;
         $controller->setDatabase($container->get(Adapter::class));
-        $controller->setTable($container->get(UtentiTable::class));
+        $controller->setUtentiTable($container->get(UtentiTable::class));
         $controller->setFormRegistrazione($container->get(RegistrazioneForm::class));
         return $controller;
     }

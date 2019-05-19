@@ -1,15 +1,8 @@
 <?php
-/**
- * This form is used to collect user's personal information and address.
- */
 namespace Application\Form;
 
 use Zend\Form\Form;
 
-/**
- * This form is used to collect user's personal information and address.
- * This data is intended to be used when registering a new user.
- */
 class RegistrazioneForm extends Form
 {
     use \Application\Traits\DatabaseTrait;
@@ -115,7 +108,6 @@ class RegistrazioneForm extends Form
     public function addInputFilter()
     {
         $inputFilter = $this->getInputFilter();
-
 
         $inputFilter->add([
             'name'     => 'nome',
