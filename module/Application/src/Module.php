@@ -9,6 +9,8 @@ namespace Application;
 
 use Application\Controller\LoginController;
 use Application\Service\AuthManager;
+use Zend\ModuleManager\ModuleManager;
+use Zend\Mvc\MvcEvent;
 
 class Module
 {
@@ -17,6 +19,14 @@ class Module
     public function getConfig()
     {
         return include __DIR__ . '/../config/module.config.php';
+    }
+    public function init(ModuleManager $manager)
+    {
+        // Get event manager.
+        $eventManager = $manager->getEventManager();
+        $sharedEventManager = $eventManager->getSharedManager();
+        // Register the event listener method. 
+        $sharedEventManager->attach(__NAMESPACE__, 'dispatch', [$this, 'onDispatch'], 100);
     }
 
     public function onDispatch(MvcEvent $event)
@@ -31,9 +41,10 @@ class Module
 
         // Get the instance of AuthManager service.
         $authManager = $event->getApplication()->getServiceManager()->get(AuthManager::class);
-        $isAuth = !$authManager->filterAccess($controllerName, $actionName);
+        $auth = $authManager->filterAccess($controllerName, $actionName);
 
-        if ($controllerName != LoginController::class && !$isAuth) {
+        $controller->auth = $auth;
+        if ($controllerName != LoginController::class && !$auth) {
             return $controller->redirect()->toRoute('login');
         }
     }

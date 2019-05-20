@@ -15,16 +15,7 @@ class AdminController extends AbstractActionController
     use \Application\Traits\UtentiTableTrait;
     use \Application\Traits\PolizzeTableTrait;
 
-    protected $t;
-
     protected $authService;
-
-    // protected $formAdmin;
-
-    // public function setFormAdmin(AdminForm $form)
-    // {
-    //     $this->formAdmin = $form;
-    // }
 
     public function setAuthService($authService)
     {

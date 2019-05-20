@@ -7,22 +7,22 @@
     <?= $this->headTitle('ZF Skeleton Application')->setSeparator(' - ')->setAutoEscape(false) ?>
 
     <?= $this->headMeta()
-            ->appendName('viewport', 'width=device-width, initial-scale=1.0')
-            ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
-        ?>
+        ->appendName('viewport', 'width=device-width, initial-scale=1.0')
+        ->appendHttpEquiv('X-UA-Compatible', 'IE=edge')
+    ?>
 
     <!-- Le styles -->
     <?= $this->headLink(['rel' => 'shortcut icon', 'type' => 'image/vnd.microsoft.icon', 'href' => $this->basePath() . '/img/favicon.ico'])
-            ->prependStylesheet($this->basePath('css/style.css'))
-            ->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
-            ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
-        ?>
+        ->prependStylesheet($this->basePath('css/style.css'))
+        ->prependStylesheet($this->basePath('css/bootstrap-theme.min.css'))
+        ->prependStylesheet($this->basePath('css/bootstrap.min.css'))
+    ?>
 
     <!-- Scripts -->
     <?= $this->headScript()
-            ->prependFile($this->basePath('js/bootstrap.min.js'))
-            ->prependFile($this->basePath('js/jquery-3.1.0.min.js'))
-        ?>
+        ->prependFile($this->basePath('js/bootstrap.min.js'))
+        ->prependFile($this->basePath('js/jquery-3.1.0.min.js'))
+    ?>
 </head>
 
 <body>
@@ -35,12 +35,16 @@
                     <span class="icon-bar"></span>
                 </button>
                 <a class="navbar-brand" href="<?= $this->url('home') ?>">
-                    <img src="<?= $this->basePath('img/zf-logo-mark.svg') ?>" height="28"
-                        alt="Zend Framework <?= \Application\Module::VERSION ?>" />&nbsp;Skeleton Application
+                    <img src="<?= $this->basePath('img/zf-logo-mark.svg') ?>" height="28" alt="Zend Framework <?= \Application\Module::VERSION ?>" />&nbsp;Skeleton Application
                 </a>
             </div>
             <div class="collapse navbar-collapse">
-                <?= $this->navigation('Zend\Navigation\Default')->menu()->setUlClass('nav navbar-nav'); ?>
+                
+                <?php if ($this->auth) : ?>
+                    <?= $this->navigation('Zend\Navigation\Login')->menu()->setUlClass('nav navbar-nav'); ?>
+                <?php else : ?>
+                    <?= $this->navigation('Zend\Navigation\Default')->menu()->setUlClass('nav navbar-nav'); ?>
+                <?php endif; ?>
             </div>
         </div>
     </nav>

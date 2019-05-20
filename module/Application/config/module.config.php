@@ -80,22 +80,13 @@ return [
         ],
     ],
     'access_filter' => [
+        'options' => [
+            'mode' => 'permissive'
+        ],
         'controllers' => [
-            'options' => [
-                // The access filter can work in 'restrictive' (recommended) or 'permissive'
-                // mode. In restrictive mode all controller actions must be explicitly listed 
-                // under the 'access_filter' config key, and access is denied to any not listed 
-                // action for not logged in users. In permissive mode, if an action is not listed 
-                // under the 'access_filter' key, access to it is permitted to anyone (even for 
-                // not logged in users. Restrictive mode is more secure and recommended to use.
-                'mode' => 'restrictive'
-            ],
-            Controller\UserController::class => [
-                // Give access to "resetPassword", "message" and "setPassword" actions
-                // to anyone.
-                ['actions' => ['resetPassword', 'message', 'setPassword'], 'allow' => '*'],
-                // Give access to "index", "add", "edit", "view", "changePassword" actions to authorized users only.
-                ['actions' => ['index', 'add', 'edit', 'view', 'changePassword'], 'allow' => '@']
+            Controller\AdminController::class => [
+                // ['actions' => [], 'allow' => '*'],
+                ['actions' => ['index', 'profilo', 'dettaglio', 'elenco', 'nuova', 'modifica'], 'allow' => '@']
             ],
         ]
     ],

@@ -29,7 +29,6 @@ class LoginController extends AbstractActionController
 
     public function loginAction()
     {
-
         $message = '';
 
         if ($this->getRequest()->isPost()) {
