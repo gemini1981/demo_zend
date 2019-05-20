@@ -1,0 +1,31 @@
+<h2>Polizze - elenco</h2>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Numero</th>
+            <th>Compagnia</th>
+            <th>Data emissione</th>
+            <th>Data sadenza</th>
+            <th>Premio</th>
+            <th>Tipo</th>
+            <th>&nbsp;</th>
+            <th>&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        <?php foreach ($this->polizze as $polizza) : ?>
+            <?php $polizza = $polizza->extract(); ?>
+            <tr>
+                <td><?= $polizza['numero']; ?></td>
+                <td><?= $polizza['compagnia']; ?></td>
+                <td><?= $polizza['data_emissione']; ?></td>
+                <td><?= $polizza['data_scadenza']; ?></td>
+                <td><?= $polizza['premio']; ?></td>
+                <td><?= $polizza['tipo']; ?></td>
+                <td><a href="<?= $this->url('admin') ?>/dettaglio/<?= $polizza['id']; ?>">dettaglio</a></td>
+                <td><a href="<?= $this->url('admin') ?>/modifica/<?= $polizza['id']; ?>">modifica</a></td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>

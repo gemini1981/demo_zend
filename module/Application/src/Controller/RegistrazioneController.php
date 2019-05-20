@@ -9,9 +9,8 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-use Application\Form\RegistrazioneForm;
-use Zend\Db\Adapter\Adapter;
 use Application\Model\Utente;
+use Application\Form\RegistrazioneForm;
 
 class RegistrazioneController extends AbstractActionController
 {
@@ -21,41 +20,43 @@ class RegistrazioneController extends AbstractActionController
     const REG_SUCCESS   = '<b style="color:green;">Registration was successful</b>';
     const REG_FAIL      = '<b style="color:red;">Registration failed</b>';
 
+    protected $formRegistrazione;
+
+    public function setFormRegistrazione(RegistrazioneForm $form)
+    {
+        $this->formRegistrazione = $form;
+    }
+
     public function indexAction()
     {
-        $form = new RegistrazioneForm($this->database);
+        $message = '';
 
         if ($this->getRequest()->isPost()) {
 
             // preleva i dati dal POST
             $data = $this->params()->fromPost();
 
-            // $form->bind(new Utente($data));
-            $form->setData($data);
+            $this->formRegistrazione->setData($data);
 
             // Valida i dati
-            if ($form->isValid()) {
+            if ($this->formRegistrazione->isValid()) {
 
                 // Ritorna i dat validati
-                $data = $form->getData();
-                $user= new Utente($data);
+                $data = $this->formRegistrazione->getData();
+                $user = new Utente($data);
 
-                if ($this->table->save($user)) {
+                if ($this->UtentiTable->save($user)) {
                     $message = self::REG_SUCCESS;
                 } else {
                     $message = self::REG_FAIL . '<br>' . implode('<br>', $this->database->getMessages());
                 }
 
-                // return $this->redirect()->toRoute('login');
+                return $this->redirect()->toRoute('login');
             }
         }
 
-        // $result = $this->database->query('SELECT * FROM `utenti`', Adapter::QUERY_MODE_EXECUTE);
-        // print_r($result->current()->email);
-        // echo $result->count();
-
         $viewModel = new ViewModel([
-            'form'      => $form,
+            'form'      => $this->formRegistrazione,
             'message'   => $message,
         ]);
         return $viewModel;

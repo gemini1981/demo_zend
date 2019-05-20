@@ -1,41 +1,13 @@
 <?php
-/**
- * This form is used to collect user's personal information and address.
- */
 namespace Application\Form;
 
 use Zend\Form\Form;
 
-/**
- * This form is used to collect user's personal information and address.
- * This data is intended to be used when registering a new user.
- */
 class RegistrazioneForm extends Form
 {
+    use \Application\Traits\DatabaseTrait;
 
-    protected $db;
-
-    /**
-     * Constructor.     
-     */
-    public function __construct($db)
-    {
-        // Define form name
-        parent::__construct('registrazione-form');
-
-        $this->db = $db;
-
-        // Set POST method for this form
-        $this->setAttribute('method', 'post');
-
-        $this->addElements();
-        $this->addInputFilter();
-    }
-
-    /**
-     * This method adds elements to form (input fields and submit button).
-     */
-    protected function addElements()
+    public function addElements()
     {
 
         // Campo Nome
@@ -133,13 +105,9 @@ class RegistrazioneForm extends Form
         ]);
     }
 
-    /**
-     * This method creates input filter (used for form filtering/validation).
-     */
-    private function addInputFilter()
+    public function addInputFilter()
     {
         $inputFilter = $this->getInputFilter();
-
 
         $inputFilter->add([
             'name'     => 'nome',
@@ -196,7 +164,7 @@ class RegistrazioneForm extends Form
                     'options' => [
                         'table' => 'utenti',
                         'field' => 'email',
-                        'adapter' => $this->db,
+                        'adapter' => $this->database,
                         'exclude' => array(
                             'field' => 'email',
                             'value' => ['email'],
