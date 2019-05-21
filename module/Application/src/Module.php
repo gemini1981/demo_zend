@@ -11,6 +11,7 @@ use Application\Controller\LoginController;
 use Application\Service\AuthManager;
 use Zend\ModuleManager\ModuleManager;
 use Zend\Mvc\MvcEvent;
+use Zend\Authentication\AuthenticationService;
 
 class Module
 {
@@ -39,11 +40,13 @@ class Module
         // Convert dash-style action name to camel-case.
         $actionName = str_replace('-', '', lcfirst(ucwords($actionName, '-')));
 
+        $authService = $event->getApplication()->getServiceManager()->get(AuthenticationService::class);
+        $controller->layout()->hasIdentity = $authService->hasIdentity();
+
         // Get the instance of AuthManager service.
         $authManager = $event->getApplication()->getServiceManager()->get(AuthManager::class);
         $auth = $authManager->filterAccess($controllerName, $actionName);
 
-        $controller->auth = $auth;
         if ($controllerName != LoginController::class && !$auth) {
             return $controller->redirect()->toRoute('login');
         }

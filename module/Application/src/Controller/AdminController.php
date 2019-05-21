@@ -28,8 +28,10 @@ class AdminController extends AbstractActionController
         $utente = $this->UtentiTable->findByEmail($identity);
 
         $viewModel = new ViewModel([
+            'hasIdentity' => $this->authService->hasIdentity(),
             'utente' => $utente->getNome() . ' ' . $utente->getCognome(),
         ]);
+        $viewModel->setTemplate('application/index/index');
         return $viewModel;
     }
 

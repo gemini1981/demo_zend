@@ -11,27 +11,30 @@
  * file.
  */
 use Zend\Session\Storage\SessionArrayStorage;
+
 return [
     'navigation' => [
         'default' => [
-            ['label' => 'Home', 'route' => 'home',],
-            ['label' => 'Registrazione', 'route' => 'registrazione',],
-            ['label' => 'Login', 'route' => 'login',],
+            ['label' => 'Home', 'route' => 'home'],
+            ['label' => 'Registrazione', 'route' => 'registrazione'],
+            ['label' => 'Login', 'route' => 'login'],
         ],
         'login' => [
-            ['label' => 'Home', 'route' => 'home',],
-            ['label' => 'Logout', 'route' => 'home',],
+            ['label' => 'Home', 'route' => 'admin', 'action'=>'index'],
+            ['label' => 'Profilo', 'route' => 'admin', 'action' => 'profilo'],
+            ['label' => 'Elenco polizze', 'route' => 'admin', 'action' => 'elenco'],            
+            ['label' => 'Logout', 'route' => 'logout'],
         ],
     ],
     'db' => [
-        'driver'         => 'Pdo',
-        'dsn'            => 'mysql:dbname=demo;host=localhost',
+        'driver' => 'Pdo',
+        'dsn' => 'mysql:dbname=demo;host=localhost',
     ],
     'session_storage' => [
-        'type' => SessionArrayStorage::class
+        'type' => SessionArrayStorage::class,
     ],
     'session_config' => [
-        'cookie_lifetime'     => 60*60*1, 
-        'gc_maxlifetime'      => 60*60*24*30,        
+        'cookie_lifetime' => 60 * 60 * 1,
+        'gc_maxlifetime' => 60 * 60 * 24 * 30,
     ],
 ];

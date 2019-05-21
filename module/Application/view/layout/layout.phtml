@@ -39,8 +39,7 @@
                 </a>
             </div>
             <div class="collapse navbar-collapse">
-                
-                <?php if ($this->auth) : ?>
+                <?php if ($this->hasIdentity) : ?>
                     <?= $this->navigation('Zend\Navigation\Login')->menu()->setUlClass('nav navbar-nav'); ?>
                 <?php else : ?>
                     <?= $this->navigation('Zend\Navigation\Default')->menu()->setUlClass('nav navbar-nav'); ?>
