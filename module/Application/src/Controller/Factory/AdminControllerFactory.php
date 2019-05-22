@@ -8,6 +8,7 @@ use Application\Model\UtentiTable;
 use Application\Model\PolizzeTable;
 use Application\Model\PolizzeCasaTable;
 use Application\Model\PolizzeAutoTable;
+use Application\Form\PolizzaForm;
 
 class AdminControllerFactory implements FactoryInterface
 {
@@ -19,7 +20,7 @@ class AdminControllerFactory implements FactoryInterface
         $controller->setPolizzeCasaTable($container->get(PolizzeCasaTable::class));
         $controller->setPolizzeAutoTable($container->get(PolizzeAutoTable::class));
         $controller->setUtentiTable($container->get(UtentiTable::class));
-        // $controller->setFormAdmin($container->get(AdminForm::class));
+        $controller->setFormPolizza($container->get(PolizzaForm::class));
         return $controller;
     }
 }

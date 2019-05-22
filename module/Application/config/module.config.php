@@ -102,6 +102,7 @@ return [
         'factories' => [
             Form\RegistrazioneForm::class => Form\Factory\RegistrazioneFormFactory::class,
             Form\LoginForm::class => Form\Factory\LoginFormFactory::class,
+            Form\PolizzaForm::class => Form\Factory\PolizzaFormFactory::class,
             Model\UtentiTable::class => Model\Factory\UtentiTableFactory::class,
             Model\PolizzeTable::class => Model\Factory\PolizzeTableFactory::class,
             Model\PolizzeCasaTable::class => Model\Factory\PolizzeCasaTableFactory::class,

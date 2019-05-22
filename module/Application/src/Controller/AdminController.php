@@ -9,6 +9,7 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Application\Form\PolizzaForm;
 
 class AdminController extends AbstractActionController
 {
@@ -16,6 +17,13 @@ class AdminController extends AbstractActionController
     use \Application\Traits\PolizzeTableTrait;
 
     protected $authService;
+
+    protected $formPolizza;
+
+    public function setFormPolizza(PolizzaForm $form)
+    {
+        $this->formPolizza = $form;
+    }
 
     public function setAuthService($authService)
     {
@@ -47,7 +55,12 @@ class AdminController extends AbstractActionController
     }
 
     public function nuovaAction()
-    { }
+    {
+        $viewModel = new ViewModel([
+            'form' => $this->formPolizza,
+        ]);
+        return $viewModel;
+    }
 
     public function elencoAction()
     {

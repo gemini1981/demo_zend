@@ -4,13 +4,13 @@ namespace Application\Form\Factory;
 
 use Zend\ServiceManager\Factory\FactoryInterface;
 use Interop\Container\ContainerInterface;
-use Application\Form\LoginForm;
+use Application\Form\PolizzaForm;
 
-class LoginFormFactory implements FactoryInterface
+class PolizzaFormFactory implements FactoryInterface
 {
     public function __invoke(ContainerInterface $container, $requestedName, ?array $options = NULL)
     {
-        $form = new LoginForm('login-form');
+        $form = new PolizzaForm('polizza-form');
         $form->setAttribute('method', 'post');
         $form->addElements();
         $form->addInputFilter();
