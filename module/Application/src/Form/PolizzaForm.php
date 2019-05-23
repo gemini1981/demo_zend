@@ -9,6 +9,14 @@ class PolizzaForm extends Form
     public function addElements()
     {
         $this->add([
+            'type'  => 'hidden',
+            'name' => 'step',
+            'attributes' => [
+                'value' => '1',
+            ]
+        ]);
+
+        $this->add([
             'type'  => 'text',
             'name' => 'numero',
             'options' => [
@@ -93,7 +101,7 @@ class PolizzaForm extends Form
                 [
                     'name'    => 'StringLength',
                     'options' => [
-                        'min' => 6,
+                        'min' => 3,
                         'max' => 64
                     ],
                 ],
@@ -146,7 +154,7 @@ class PolizzaForm extends Form
         ]);
 
         $inputFilter->add([
-            'name'     => 'data_scadenza',
+            'name'     => 'premio',
             'required' => true,
             'filters'  => [],
             'validators' => [

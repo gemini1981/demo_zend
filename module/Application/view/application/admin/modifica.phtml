@@ -1,0 +1,83 @@
+<?php
+
+$form->get('numero')->setAttributes([
+	'class' => 'form-control',
+	'placeholder' => 'Numero polizza'
+]);
+
+$form->get('compagnia')->setAttributes([
+	'class' => 'form-control',
+	'placeholder' => 'Compagnia assicurativa'
+]);
+
+$form->get('data_emissione')->setAttributes([
+	'class' => 'form-control',
+	'placeholder' => 'yyyy-mm-dd'
+]);
+
+$form->get('data_scadenza')->setAttributes([
+	'class' => 'form-control',
+	'placeholder' => 'yyyy-mm-dd'
+]);
+
+$form->get('premio')->setAttributes([
+	'class' => 'form-control',
+	'placeholder' => 'yyyy-mm-dd'
+]);
+
+$form->get('salva')->setAttributes(array('class' => 'btn btn-primary'));
+$form->get('cancella')->setAttributes(array('class' => 'btn btn-default'));
+
+$form->prepare();
+?>
+
+<h1>Nuova polizza</h1>
+
+<?php if ($this->message) : ?><b><?= $this->message; ?></b><br><?php endif; ?>
+<div class="row">
+	<div class="col-md-6">
+		<?= $this->form()->openTag($form); ?>
+
+		<?= $this->formElement($form->get('step')); ?>
+		
+		<div class="form-group">
+			<?= $this->formLabel($form->get('numero')); ?>
+			<?= $this->formElement($form->get('numero')); ?>
+			<?= $this->formElementErrors($form->get('numero')); ?>
+		</div>
+
+		<div class="form-group">
+			<?= $this->formLabel($form->get('compagnia')); ?>
+			<?= $this->formElement($form->get('compagnia')); ?>
+			<?= $this->formElementErrors($form->get('compagnia')); ?>
+		</div>
+
+		<div class="form-group">
+			<?= $this->formLabel($form->get('data_emissione')); ?>
+			<?= $this->formElement($form->get('data_emissione')); ?>
+			<?= $this->formElementErrors($form->get('data_emissione')); ?>
+		</div>
+
+
+		<div class="form-group">
+			<?= $this->formLabel($form->get('data_scadenza')); ?>
+			<?= $this->formElement($form->get('data_scadenza')); ?>
+			<?= $this->formElementErrors($form->get('data_scadenza')); ?>
+		</div>
+
+		<div class="form-group">
+			<?= $this->formLabel($form->get('premio')); ?>
+			<?= $this->formElement($form->get('premio')); ?>
+			<?= $this->formElementErrors($form->get('premio')); ?>
+		</div>
+
+		<div class="form-group">
+			<?= $this->formElement($form->get('salva')); ?>
+			<?= $this->formElement($form->get('cancella')); ?>
+		</div>
+
+		<?= $this->formElement($form->get('csrf')); ?>
+
+		<?= $this->form()->closeTag(); ?>
+	</div>
+</div>

@@ -10,11 +10,15 @@ namespace Application\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use Application\Form\PolizzaForm;
+use Application\Model\Polizza;
 
 class AdminController extends AbstractActionController
 {
     use \Application\Traits\UtentiTableTrait;
     use \Application\Traits\PolizzeTableTrait;
+
+    const REG_SUCCESS   = '<b style="color:green;">Registration was successful</b>';
+    const REG_FAIL      = '<b style="color:red;">Registration failed</b>';
 
     protected $authService;
 
@@ -54,8 +58,38 @@ class AdminController extends AbstractActionController
         return $viewModel;
     }
 
-    public function nuovaAction()
+    public function modificaAction()
     {
+        // $message = '';
+
+        $id = $this->params()->fromRoute('id');
+
+        $polizza = $this->PolizzeTable->findById($id);
+
+        if ($this->getRequest()->isPost()) {
+
+            // preleva i dati dal POST
+            $data = $this->params()->fromPost();
+
+            $this->formPolizza->setData($data);
+
+            // Valida i dati
+            if ($this->formPolizza->isValid()) {
+
+                // Ritorna i dat validati
+                $data = array_merge($polizza->extract(), $this->formPolizza->getData());
+                $polizza = new Polizza($data);
+
+                if ($this->PolizzeTable->save($polizza)) {
+                    $message = self::REG_SUCCESS;
+                } else {
+                    // $message = self::REG_FAIL . '<br>' . implode('<br>', $this->database->getMessages());
+                }
+            }
+        } else {
+            $this->formPolizza->setData($polizza->extract());
+        }
+
         $viewModel = new ViewModel([
             'form' => $this->formPolizza,
         ]);
@@ -73,11 +107,14 @@ class AdminController extends AbstractActionController
         return $viewModel;
     }
 
-    public function modificaAction()
+    public function nuovaAction()
     {
-        $id = $this->params()->fromRoute('id');
 
-        echo $id;
+
+        echo 'nuova';
+        $viewModel = new ViewModel([]);
+
+        return $viewModel;
     }
 
     public function dettaglioAction()

@@ -14,8 +14,9 @@ class PolizzeTable extends AbstractTable
     }
     public function save(AbstractModel $polizza)
     {
-        if ($polizza->getId) {
-            return $this->tableGateway->update($polizza->extract());
+        if ($polizza->getId()) {
+            $where['id = ?'] = $polizza->getId();
+            return $this->tableGateway->update($polizza->extract(), $where);
         }
         return $this->tableGateway->insert($polizza->extract());
     }
