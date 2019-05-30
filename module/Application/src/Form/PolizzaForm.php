@@ -57,6 +57,11 @@ class PolizzaForm extends Form
         ]);
 
         $this->add([
+            'name' => 'polizza_casa',
+            'type' => PolizzaCasaFieldset::class,
+        ]);
+
+        $this->add([
             'type' => 'csrf',
             'name' => 'csrf',
             'options' => [

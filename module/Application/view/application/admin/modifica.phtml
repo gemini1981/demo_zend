@@ -25,6 +25,19 @@ $form->get('premio')->setAttributes([
 	'placeholder' => 'yyyy-mm-dd'
 ]);
 
+
+
+$fieldset = $form->get('polizza_casa');
+
+$citta = $fieldset->get('citta');
+
+$citta->setAttributes([
+	'class' => 'form-control',
+	'placeholder' => 'Città'
+]);
+
+
+
 $form->get('salva')->setAttributes(array('class' => 'btn btn-primary'));
 $form->get('cancella')->setAttributes(array('class' => 'btn btn-default'));
 
@@ -39,7 +52,7 @@ $form->prepare();
 		<?= $this->form()->openTag($form); ?>
 
 		<?= $this->formElement($form->get('step')); ?>
-		
+
 		<div class="form-group">
 			<?= $this->formLabel($form->get('numero')); ?>
 			<?= $this->formElement($form->get('numero')); ?>
@@ -58,7 +71,6 @@ $form->prepare();
 			<?= $this->formElementErrors($form->get('data_emissione')); ?>
 		</div>
 
-
 		<div class="form-group">
 			<?= $this->formLabel($form->get('data_scadenza')); ?>
 			<?= $this->formElement($form->get('data_scadenza')); ?>
@@ -69,6 +81,12 @@ $form->prepare();
 			<?= $this->formLabel($form->get('premio')); ?>
 			<?= $this->formElement($form->get('premio')); ?>
 			<?= $this->formElementErrors($form->get('premio')); ?>
+		</div>
+
+		<div class="form-group">
+			<?= $this->formLabel($citta); ?>
+			<?= $this->formElement($citta); ?>
+			<?= $this->formElementErrors($citta); ?>
 		</div>
 
 		<div class="form-group">
