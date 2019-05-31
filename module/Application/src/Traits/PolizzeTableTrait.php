@@ -8,19 +8,14 @@ use Application\Model\PolizzeAutoTable;
 trait PolizzeTableTrait
 {
     protected $PolizzeTable;
-    protected $PolizzeCasaTable;
-    protected $PolizzeAutoTable;
+    protected $PolizzeExtraTable;    
 
     public function setPolizzeTable(PolizzeTable $table)
     {
         $this->PolizzeTable = $table;
     }
-    public function setPolizzeCasaTable(PolizzeCasaTable $table)
+    public function setPolizzeExtraTable(array $array_table)
     {
-        $this->PolizzeCasaTable = $table;
-    }
-    public function setPolizzeAutoTable(PolizzeAutoTable $table)
-    {
-        $this->PolizzeAutoTable = $table;
-    }
+        $this->PolizzeExtraTable = $array_table;
+    }    
 }

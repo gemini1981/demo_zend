@@ -3,15 +3,15 @@ namespace Application\Form;
 
 use Zend\Form\Fieldset;
 
-class PolizzaCasaFieldset extends Fieldset
+class PolizzaAutoFieldset extends Fieldset
 {
     public function init()
     {
         $this->add([
             'type' => 'text',
-            'name' => 'citta',
+            'name' => 'marca',
             'options' => [
-                'label' => 'Città',
+                'label' => 'Marca',
             ],
             'attributes' => [
                 'class' => 'form-control',
@@ -21,9 +21,9 @@ class PolizzaCasaFieldset extends Fieldset
 
         $this->add([
             'type' => 'text',
-            'name' => 'cap',
+            'name' => 'modello',
             'options' => [
-                'label' => 'Cap',
+                'label' => 'Modello',
             ],
             'attributes' => [
                 'class' => 'form-control',
@@ -33,21 +33,9 @@ class PolizzaCasaFieldset extends Fieldset
 
         $this->add([
             'type' => 'text',
-            'name' => 'indirizzo',
+            'name' => 'targa',
             'options' => [
-                'label' => 'Indirizzo',
-            ],
-            'attributes' => [
-                'class' => 'form-control',
-                'placeholder' => '',
-            ],
-        ]);
-
-        $this->add([
-            'type' => 'text',
-            'name' => 'civico',
-            'options' => [
-                'label' => 'Civico',
+                'label' => 'Targa',
             ],
             'attributes' => [
                 'class' => 'form-control',

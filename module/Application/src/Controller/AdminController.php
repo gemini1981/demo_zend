@@ -7,18 +7,18 @@
 
 namespace Application\Controller;
 
-use Zend\Mvc\Controller\AbstractActionController;
-use Zend\View\Model\ViewModel;
 use Application\Form\PolizzaForm;
 use Application\Model\Polizza;
+use Zend\Mvc\Controller\AbstractActionController;
+use Zend\View\Model\ViewModel;
 
 class AdminController extends AbstractActionController
 {
     use \Application\Traits\UtentiTableTrait;
     use \Application\Traits\PolizzeTableTrait;
 
-    const REG_SUCCESS   = '<b style="color:green;">Registration was successful</b>';
-    const REG_FAIL      = '<b style="color:red;">Registration failed</b>';
+    const REG_SUCCESS = '<b style="color:green;">Registration was successful</b>';
+    const REG_FAIL = '<b style="color:red;">Registration failed</b>';
 
     protected $authService;
 
@@ -66,6 +66,11 @@ class AdminController extends AbstractActionController
 
         $polizza = $this->PolizzeTable->findById($id);
 
+        $polizza_extra = ($this->PolizzeExtraTable[$polizza->getTipo()])
+            ->findByIdPolizza($polizza->getId());
+
+        $this->formPolizza->addElementExtra($this->formPolizza->getExtraFieldsetsByField($polizza->getTipo()));
+
         if ($this->getRequest()->isPost()) {
 
             // preleva i dati dal POST
@@ -87,7 +92,9 @@ class AdminController extends AbstractActionController
                 }
             }
         } else {
-            $this->formPolizza->setData($polizza->extract());
+            $data = $polizza->extract();
+            $data['polizza_extra'] = $polizza_extra->extract();
+            $this->formPolizza->setData($data);
         }
 
         $viewModel = new ViewModel([
@@ -110,7 +117,6 @@ class AdminController extends AbstractActionController
     public function nuovaAction()
     {
 
-
         echo 'nuova';
         $viewModel = new ViewModel([]);
 
@@ -124,14 +130,9 @@ class AdminController extends AbstractActionController
         $polizza_extra = [];
         if ($polizza) {
             $polizza = $polizza->extract();
-            switch ($polizza['tipo']) {
-                case 'casa':
-                    $polizza_extra = $this->PolizzeCasaTable->findByIdPolizza($id)->extract();
-                    break;
-                case 'auto':
-                    $polizza_extra = $this->PolizzeAutoTable->findByIdPolizza($id)->extract();
-                    break;
-            }
+            $tipo = $polizza['tipo'];
+            $polizza_extra = ($this->PolizzeExtraTable[$tipo])
+                ->findByIdPolizza($id)->extract();
         }
 
         $viewModel = new ViewModel([

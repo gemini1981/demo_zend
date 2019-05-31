@@ -7,7 +7,7 @@ class PolizzaAuto extends AbstractModel
 {
     protected $mapping = [
         'id' => 'id',
-        'id_polizza' => 'id_polizza',
+        'idpolizza' => 'id_polizza',
         'marca' => 'marca',
         'modello' => 'modello',
         'targa' => 'targa',

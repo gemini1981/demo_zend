@@ -5,19 +5,20 @@ use Zend\Form\Form;
 
 class PolizzaForm extends Form
 {
+    protected $extra_fieldsets = [];
 
     public function addElements()
     {
         $this->add([
-            'type'  => 'hidden',
+            'type' => 'hidden',
             'name' => 'step',
             'attributes' => [
                 'value' => '1',
-            ]
+            ],
         ]);
 
         $this->add([
-            'type'  => 'text',
+            'type' => 'text',
             'name' => 'numero',
             'options' => [
                 'label' => 'Numero polizza',
@@ -25,7 +26,7 @@ class PolizzaForm extends Form
         ]);
 
         $this->add([
-            'type'  => 'text',
+            'type' => 'text',
             'name' => 'compagnia',
             'options' => [
                 'label' => 'Compagnia',
@@ -33,7 +34,7 @@ class PolizzaForm extends Form
         ]);
 
         $this->add([
-            'type'  => 'text',
+            'type' => 'text',
             'name' => 'data_emissione',
             'options' => [
                 'label' => 'Data emissione',
@@ -41,7 +42,7 @@ class PolizzaForm extends Form
         ]);
 
         $this->add([
-            'type'  => 'text',
+            'type' => 'text',
             'name' => 'data_scadenza',
             'options' => [
                 'label' => 'Data scadenza',
@@ -49,7 +50,7 @@ class PolizzaForm extends Form
         ]);
 
         $this->add([
-            'type'  => 'text',
+            'type' => 'text',
             'name' => 'premio',
             'options' => [
                 'label' => 'Premio',
@@ -57,22 +58,17 @@ class PolizzaForm extends Form
         ]);
 
         $this->add([
-            'name' => 'polizza_casa',
-            'type' => PolizzaCasaFieldset::class,
-        ]);
-
-        $this->add([
             'type' => 'csrf',
             'name' => 'csrf',
             'options' => [
                 'csrf_options' => [
-                    'timeout' => 600
-                ]
+                    'timeout' => 600,
+                ],
             ],
         ]);
 
         $this->add([
-            'type'  => 'submit',
+            'type' => 'submit',
             'name' => 'salva',
             'attributes' => [
                 'value' => 'Salva',
@@ -81,13 +77,21 @@ class PolizzaForm extends Form
         ]);
 
         $this->add([
-            'type'       => 'submit',
-            'name'       => 'cancella',
+            'type' => 'submit',
+            'name' => 'cancella',
             'attributes' => [
-                'type'  => 'reset',
+                'type' => 'reset',
                 'value' => 'Cancella',
-                'id'    => 'cancella',
-            ]
+                'id' => 'cancella',
+            ],
+        ]);
+    }
+
+    public function addElementExtra(string $extra)
+    {
+        $this->add([
+            'name' => 'polizza_extra',
+            'type' => $extra,
         ]);
     }
 
@@ -97,71 +101,71 @@ class PolizzaForm extends Form
         $inputFilter = $this->getInputFilter();
 
         $inputFilter->add([
-            'name'     => 'numero',
+            'name' => 'numero',
             'required' => true,
-            'filters'  => [
+            'filters' => [
                 ['name' => 'StringTrim'],
             ],
             'validators' => [
                 [
-                    'name'    => 'StringLength',
+                    'name' => 'StringLength',
                     'options' => [
                         'min' => 3,
-                        'max' => 64
+                        'max' => 64,
                     ],
                 ],
             ],
         ]);
 
         $inputFilter->add([
-            'name'     => 'compagnia',
+            'name' => 'compagnia',
             'required' => true,
-            'filters'  => [],
+            'filters' => [],
             'validators' => [
                 [
-                    'name'    => 'StringLength',
+                    'name' => 'StringLength',
                     'options' => [
                         'min' => 6,
-                        'max' => 64
+                        'max' => 64,
                     ],
                 ],
             ],
         ]);
 
         $inputFilter->add([
-            'name'     => 'data_emissione',
+            'name' => 'data_emissione',
             'required' => true,
-            'filters'  => [],
+            'filters' => [],
             'validators' => [
                 [
                     'name' => 'StringLength',
                     'options' => [
                         'min' => 10,
-                        'max' => 10
+                        'max' => 10,
                     ],
                 ],
             ],
         ]);
 
         $inputFilter->add([
-            'name'     => 'data_scadenza',
+            'name' => 'data_scadenza',
             'required' => true,
-            'filters'  => [],
+            'filters' => [],
             'validators' => [
                 [
                     'name' => 'StringLength',
                     'options' => [
                         'min' => 10,
-                        'max' => 10
+                        'max' => 10,
                     ],
                 ],
             ],
         ]);
 
         $inputFilter->add([
-            'name'     => 'premio',
+            'name' => 'premio',
             'required' => true,
-            'filters'  => [],
+            'filters' => [],
             'validators' => [
                 [
                     'name' => 'Float',
@@ -171,5 +175,21 @@ class PolizzaForm extends Form
                 ],
             ],
         ]);
+    }
+
+    public function getExtraFieldsets()
+    {
+        return $this->extra_fieldsets;
+    }
+
+    public function setExtraFieldsets(array $extra_fieldsets)
+    {
+        $this->extra_fieldsets = $extra_fieldsets;
+        return $this;
+    }
+
+    public function getExtraFieldsetsByField(string $field)
+    {
+        return $this->extra_fieldsets[$field] ?? null;
     }
 }
