@@ -1,8 +1,8 @@
--- MySQL dump 10.17  Distrib 10.3.14-MariaDB, for Linux (x86_64)
+-- MySQL dump 10.17  Distrib 10.3.15-MariaDB, for Linux (x86_64)
 --
 -- Host: localhost    Database: demo
 -- ------------------------------------------------------
--- Server version	10.3.14-MariaDB
+-- Server version	10.3.15-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -24,18 +24,18 @@ DROP TABLE IF EXISTS `polizze`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `polizze` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_utente` int(11) NOT NULL,
+  `idutente` int(11) NOT NULL,
   `numero` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
   `compagnia` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `data_emissione` date NOT NULL,
-  `data_scadenza` date NOT NULL,
-  `premio` decimal(10,0) NOT NULL,
+  `dataemissione` date NOT NULL,
+  `datascadenza` date NOT NULL,
+  `premio` float(10,2) NOT NULL,
   `tipo` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `polizze_UN` (`numero`,`compagnia`),
-  KEY `polizze_utenti_FK` (`id_utente`),
-  CONSTRAINT `polizze_utenti_FK` FOREIGN KEY (`id_utente`) REFERENCES `utenti` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  KEY `polizze_utenti_FK` (`idutente`),
+  CONSTRAINT `polizze_utenti_FK` FOREIGN KEY (`idutente`) REFERENCES `utenti` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,7 @@ CREATE TABLE `polizze` (
 
 LOCK TABLES `polizze` WRITE;
 /*!40000 ALTER TABLE `polizze` DISABLE KEYS */;
-INSERT INTO `polizze` VALUES (1,13,'A0001','assicurazione1','2019-05-19','2019-06-01',10,'casa'),(3,13,'A0002','assicurazione1','2019-05-19','2019-06-01',10,'casa'),(4,13,'B0002','assicurazione1','2019-05-19','2019-06-01',23,'auto');
+INSERT INTO `polizze` VALUES (20,13,'N0001','assicurazione1','2019-06-02','2019-06-02',10.44,'casa'),(21,13,'N0002','assicurazione1','2019-06-02','2019-06-22',23.00,'auto');
 /*!40000 ALTER TABLE `polizze` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -57,14 +57,14 @@ DROP TABLE IF EXISTS `polizze_auto`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `polizze_auto` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_polizza` int(11) NOT NULL,
+  `idpolizza` int(11) NOT NULL,
   `marca` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `modello` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `targa` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `polizze_casa_id_polizza_IDX` (`id_polizza`) USING BTREE,
-  CONSTRAINT `polizze_auto_polizze_FK` FOREIGN KEY (`id_polizza`) REFERENCES `polizze` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  KEY `polizze_casa_id_polizza_IDX` (`idpolizza`) USING BTREE,
+  CONSTRAINT `polizze_auto_polizze_FK` FOREIGN KEY (`idpolizza`) REFERENCES `polizze` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -73,7 +73,7 @@ CREATE TABLE `polizze_auto` (
 
 LOCK TABLES `polizze_auto` WRITE;
 /*!40000 ALTER TABLE `polizze_auto` DISABLE KEYS */;
-INSERT INTO `polizze_auto` VALUES (1,4,'marca1','modello1','xx999hh');
+INSERT INTO `polizze_auto` VALUES (2,21,'audi','tt','JJ888MM');
 /*!40000 ALTER TABLE `polizze_auto` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -86,15 +86,15 @@ DROP TABLE IF EXISTS `polizze_casa`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `polizze_casa` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_polizza` int(11) NOT NULL,
+  `idpolizza` int(11) NOT NULL,
   `citta` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `cap` int(10) DEFAULT NULL,
   `indirizzo` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `civico` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `polizze_casa_id_polizza_IDX` (`id_polizza`) USING BTREE,
-  CONSTRAINT `polizze_casa_polizze_FK` FOREIGN KEY (`id_polizza`) REFERENCES `polizze` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  KEY `polizze_casa_id_polizza_IDX` (`idpolizza`) USING BTREE,
+  CONSTRAINT `polizze_casa_polizze_FK` FOREIGN KEY (`idpolizza`) REFERENCES `polizze` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -103,7 +103,7 @@ CREATE TABLE `polizze_casa` (
 
 LOCK TABLES `polizze_casa` WRITE;
 /*!40000 ALTER TABLE `polizze_casa` DISABLE KEYS */;
-INSERT INTO `polizze_casa` VALUES (1,1,'milano',20137,'via milano','1'),(2,3,'milano',20137,'via milano','3');
+INSERT INTO `polizze_casa` VALUES (8,20,'milano',20137,'via cadolini','30');
 /*!40000 ALTER TABLE `polizze_casa` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -148,4 +148,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-19 23:40:08
+-- Dump completed on 2019-06-02 19:03:45

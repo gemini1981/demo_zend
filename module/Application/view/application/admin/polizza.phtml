@@ -1,0 +1,94 @@
+<?php
+
+$form->get('numero')->setAttributes([
+	'class' => 'form-control',
+	'placeholder' => 'Numero polizza',
+]);
+
+$form->get('compagnia')->setAttributes([
+	'class' => 'form-control',
+	'placeholder' => 'Compagnia assicurativa',
+]);
+
+$form->get('dataemissione')->setAttributes([
+	'class' => 'form-control',
+	'placeholder' => 'yyyy-mm-dd',
+]);
+
+$form->get('datascadenza')->setAttributes([
+	'class' => 'form-control',
+	'placeholder' => 'yyyy-mm-dd',
+]);
+
+$form->get('premio')->setAttributes([
+	'class' => 'form-control',
+	'placeholder' => '####.##',
+]);
+
+$fieldset = $form->get('polizza_extra');
+
+$form->get('salva')->setAttributes(array('class' => 'btn btn-primary'));
+$form->get('cancella')->setAttributes(array('class' => 'btn btn-default'));
+
+$form->prepare();
+?>
+
+<h1>Nuova polizza</h1>
+
+<?php if ($this->message) : ?><b><?= $this->message; ?></b><br><?php endif; ?>
+<div class="row">
+	<div class="col-md-6">
+		<?= $this->form()->openTag($form); ?>
+
+		<?= $this->formElement($form->get('id')); ?>
+		<?= $this->formElement($form->get('step')); ?>
+		<?= $this->formElement($form->get('tipo')); ?>
+
+		<div class="form-group">
+			<?= $this->formLabel($form->get('numero')); ?>
+			<?= $this->formElement($form->get('numero')); ?>
+			<?= $this->formElementErrors($form->get('numero')); ?>
+		</div>
+
+		<div class="form-group">
+			<?= $this->formLabel($form->get('compagnia')); ?>
+			<?= $this->formElement($form->get('compagnia')); ?>
+			<?= $this->formElementErrors($form->get('compagnia')); ?>
+		</div>
+
+		<div class="form-group">
+			<?= $this->formLabel($form->get('dataemissione')); ?>
+			<?= $this->formElement($form->get('dataemissione')); ?>
+			<?= $this->formElementErrors($form->get('dataemissione')); ?>
+		</div>
+
+		<div class="form-group">
+			<?= $this->formLabel($form->get('datascadenza')); ?>
+			<?= $this->formElement($form->get('datascadenza')); ?>
+			<?= $this->formElementErrors($form->get('datascadenza')); ?>
+		</div>
+
+		<div class="form-group">
+			<?= $this->formLabel($form->get('premio')); ?>
+			<?= $this->formElement($form->get('premio')); ?>
+			<?= $this->formElementErrors($form->get('premio')); ?>
+		</div>
+
+		<?php foreach ($fieldset as $k => $f) : ?>
+			<div class="form-group">
+				<?= $this->formLabel($f); ?>
+				<?= $this->formElement($f); ?>
+				<?= $this->formElementErrors($f); ?>
+			</div>
+		<?php endforeach; ?>
+
+		<div class="form-group">
+			<?= $this->formElement($form->get('salva')); ?>
+			<?= $this->formElement($form->get('cancella')); ?>
+		</div>
+
+		<?= $this->formElement($form->get('csrf')); ?>
+
+		<?= $this->form()->closeTag(); ?>
+	</div>
+</div>

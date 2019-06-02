@@ -67,16 +67,20 @@ return [
                     ],
                 ],
             ],
-            'application' => [
-                'type'    => Segment::class,
-                'options' => [
-                    'route'    => '/application[/:action]',
-                    'defaults' => [
-                        'controller' => Controller\IndexController::class,
-                        'action'     => 'index',
-                    ],
-                ],
-            ],
+        ],
+    ],
+    'navigation' => [
+        'default' => [
+            ['label' => 'Home', 'route' => 'home'],
+            ['label' => 'Registrazione', 'route' => 'registrazione'],
+            ['label' => 'Login', 'route' => 'login'],
+        ],
+        'login' => [
+            ['label' => 'Home', 'route' => 'admin', 'action'=>'index'],
+            ['label' => 'Profilo', 'route' => 'admin', 'action' => 'profilo'],
+            ['label' => 'Elenco polizze', 'route' => 'admin', 'action' => 'elenco'], 
+            ['label' => 'Nuova polizza', 'route' => 'admin', 'action' => 'tipo'], 
+            ['label' => 'Logout', 'route' => 'logout'],
         ],
     ],
     'access_filter' => [
@@ -103,6 +107,7 @@ return [
             Form\RegistrazioneForm::class => Form\Factory\RegistrazioneFormFactory::class,
             Form\LoginForm::class => Form\Factory\LoginFormFactory::class,
             Form\PolizzaForm::class => Form\Factory\PolizzaFormFactory::class,
+            Form\SelezionaTipoForm::class => Form\Factory\SelezionaTipoFormFactory::class,
             Model\UtentiTable::class => Model\Factory\UtentiTableFactory::class,
             Model\PolizzeTable::class => Model\Factory\PolizzeTableFactory::class,
             Model\PolizzeCasaTable::class => Model\Factory\PolizzeCasaTableFactory::class,

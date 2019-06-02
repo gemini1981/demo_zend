@@ -11,22 +11,27 @@ use Application\Form\PolizzaForm;
 use Application\Model\Polizza;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
+use Application\Form\SelezionaTipoForm;
 
 class AdminController extends AbstractActionController
 {
     use \Application\Traits\UtentiTableTrait;
     use \Application\Traits\PolizzeTableTrait;
-
-    const REG_SUCCESS = '<b style="color:green;">Registration was successful</b>';
-    const REG_FAIL = '<b style="color:red;">Registration failed</b>';
+    use \Application\Traits\PolizzeExtraTrait;
 
     protected $authService;
 
     protected $formPolizza;
+    protected $formSelezionaTipo;
 
     public function setFormPolizza(PolizzaForm $form)
     {
         $this->formPolizza = $form;
+    }
+
+    public function setFormSelezionaTipo(SelezionaTipoForm $form)
+    {
+        $this->formSelezionaTipo = $form;
     }
 
     public function setAuthService($authService)
@@ -34,10 +39,16 @@ class AdminController extends AbstractActionController
         $this->authService = $authService;
     }
 
-    public function indexAction()
+    protected function _getUtente()
     {
         $identity = $this->authService->getIdentity();
         $utente = $this->UtentiTable->findByEmail($identity);
+        return $utente;
+    }
+
+    public function indexAction()
+    {
+        $utente = $this->_getUtente();
 
         $viewModel = new ViewModel([
             'hasIdentity' => $this->authService->hasIdentity(),
@@ -49,8 +60,7 @@ class AdminController extends AbstractActionController
 
     public function profiloAction()
     {
-        $identity = $this->authService->getIdentity();
-        $utente = $this->UtentiTable->findByEmail($identity);
+        $utente = $this->_getUtente();
 
         $viewModel = new ViewModel([
             'utente' => $utente,
@@ -58,68 +68,91 @@ class AdminController extends AbstractActionController
         return $viewModel;
     }
 
-    public function modificaAction()
+    protected function _polizza($id = null, $tipo = null)
     {
-        // $message = '';
+        if ($id) {
+            $polizza = $this->PolizzeTable->findById($id);
+            $tipo = $polizza->getTipo();
+            $polizza_extra = ($this->PolizzeExtraTable[$tipo])->findByIdPolizza($polizza->getId());
+        } else {
+            $polizza = new Polizza();
+            $polizza->setIdUtente($this->_getUtente()->getId());
+            $polizza->setTipo($tipo);
+            $polizza_extra = new $this->PolizzeExtra[$tipo];
+        }
 
-        $id = $this->params()->fromRoute('id');
+        $this->formPolizza->addElementExtra($this->formPolizza->getExtraFieldsetsByField($tipo));
 
-        $polizza = $this->PolizzeTable->findById($id);
-
-        $polizza_extra = ($this->PolizzeExtraTable[$polizza->getTipo()])
-            ->findByIdPolizza($polizza->getId());
-
-        $this->formPolizza->addElementExtra($this->formPolizza->getExtraFieldsetsByField($polizza->getTipo()));
-
-        if ($this->getRequest()->isPost()) {
+        if ($this->getRequest()->getPost('step') == 2 && $this->getRequest()->isPost()) {
 
             // preleva i dati dal POST
-            $data = $this->params()->fromPost();
-
-            $this->formPolizza->setData($data);
+            $form_data = $this->params()->fromPost();
+            $this->formPolizza->setData($form_data);
 
             // Valida i dati
             if ($this->formPolizza->isValid()) {
-
-                // Ritorna i dat validati
-                $data = array_merge($polizza->extract(), $this->formPolizza->getData());
-                $polizza = new Polizza($data);
-
-                if ($this->PolizzeTable->save($polizza)) {
-                    $message = self::REG_SUCCESS;
-                } else {
-                    // $message = self::REG_FAIL . '<br>' . implode('<br>', $this->database->getMessages());
-                }
+                $polizza->hydrate($form_data);
+                $this->PolizzeTable->save($polizza);
+                $idpolizza = $polizza->getId() ?: $this->PolizzeTable->getLastId();
+                $form_data['polizza_extra']['idpolizza'] = $idpolizza;
+                $polizza_extra->hydrate($form_data['polizza_extra']);
+                ($this->PolizzeExtraTable[$tipo])->save($polizza_extra);
+                return true;
             }
+        } elseif ($tipo && $this->getRequest()->getPost('step') == 2) {
+            $this->formPolizza->setData(['tipo' => $tipo]);
         } else {
             $data = $polizza->extract();
             $data['polizza_extra'] = $polizza_extra->extract();
             $this->formPolizza->setData($data);
         }
+        return false;
+    }
 
+    public function tipoAction()
+    {
         $viewModel = new ViewModel([
-            'form' => $this->formPolizza,
+            'form' => $this->formSelezionaTipo,
         ]);
         return $viewModel;
     }
 
-    public function elencoAction()
+    public function modificaAction()
     {
-        $identity = $this->authService->getIdentity();
-        $utente = $this->UtentiTable->findByEmail($identity);
-        $polizze = $this->PolizzeTable->findByIdUtente($utente->getId());
+        $id = $this->params()->fromRoute('id');
+        if($this->_polizza($id, null)){
+            return $this->redirect()->toRoute('admin', ['action' => 'elenco']);
+        }
+
         $viewModel = new ViewModel([
-            'polizze' => $polizze,
+            'form' => $this->formPolizza,
         ]);
+        $viewModel->setTemplate('application/admin/polizza');
         return $viewModel;
     }
 
     public function nuovaAction()
     {
+        $tipo = $this->getRequest()->getPost('tipo');
+        if($this->_polizza(null, $tipo)){
+            return $this->redirect()->toRoute('admin', ['action' => 'elenco']);
+        }
 
-        echo 'nuova';
-        $viewModel = new ViewModel([]);
+        $viewModel = new ViewModel([
+            'form' => $this->formPolizza,
+        ]);
+        $viewModel->setTemplate('application/admin/polizza');
+        return $viewModel;
+    }
 
+
+    public function elencoAction()
+    {
+        $idutente = $this->_getUtente()->getId();
+        $polizze = $this->PolizzeTable->findByIdUtente($idutente);
+        $viewModel = new ViewModel([
+            'polizze' => $polizze,
+        ]);
         return $viewModel;
     }
 
@@ -131,8 +164,7 @@ class AdminController extends AbstractActionController
         if ($polizza) {
             $polizza = $polizza->extract();
             $tipo = $polizza['tipo'];
-            $polizza_extra = ($this->PolizzeExtraTable[$tipo])
-                ->findByIdPolizza($id)->extract();
+            $polizza_extra = ($this->PolizzeExtraTable[$tipo])->findByIdPolizza($id)->extract();
         }
 
         $viewModel = new ViewModel([

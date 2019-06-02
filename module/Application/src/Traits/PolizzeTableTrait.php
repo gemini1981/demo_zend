@@ -2,8 +2,6 @@
 namespace Application\Traits;
 
 use Application\Model\PolizzeTable;
-use Application\Model\PolizzeCasaTable;
-use Application\Model\PolizzeAutoTable;
 
 trait PolizzeTableTrait
 {

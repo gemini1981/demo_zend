@@ -9,6 +9,9 @@ use Application\Model\PolizzeTable;
 use Application\Model\UtentiTable;
 use Interop\Container\ContainerInterface;
 use Zend\ServiceManager\Factory\FactoryInterface;
+use Application\Model\PolizzaCasa;
+use Application\Model\PolizzaAuto;
+use Application\Form\SelezionaTipoForm;
 
 class AdminControllerFactory implements FactoryInterface
 {
@@ -17,13 +20,21 @@ class AdminControllerFactory implements FactoryInterface
         $controller = new AdminController;
         $controller->setAuthService($container->get(\Zend\Authentication\AuthenticationService::class));
         $controller->setPolizzeTable($container->get(PolizzeTable::class));
+
         $controller->setPolizzeExtraTable([
             'casa' => $container->get(PolizzeCasaTable::class),
             'auto' => $container->get(PolizzeAutoTable::class),
         ]);
 
+        $controller->setPolizzeExtra([
+            'casa' => PolizzaCasa::class,
+            'auto' => PolizzaAuto::class,
+        ]);
+
         $controller->setUtentiTable($container->get(UtentiTable::class));
+
         $controller->setFormPolizza($container->get(PolizzaForm::class));
+        $controller->setFormSelezionaTipo($container->get(SelezionaTipoForm::class));
         return $controller;
     }
 }

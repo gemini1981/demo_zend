@@ -34,12 +34,17 @@ abstract class AbstractModel
     public function hydrate($input)
     {
         if (is_object($input)) {
-            $this->properties = get_object_vars($input);
-        } elseif (is_array($input)) {
-            $this->properties = $input;
-        } else {
+            $input = get_object_vars($input);
+        } elseif (!is_array($input)) {
             throw new InvalidArgumentException(self::ERROR_HYDRATE);
         }
+
+        foreach ($this->mapping as $key => $value) {
+            if (isset($input[$value])) {
+                $this->properties[$key] = $input[$value];
+            }
+        }
+
         return $this;
     }
     public function extract()

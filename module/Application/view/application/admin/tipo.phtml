@@ -1,0 +1,40 @@
+<?php
+
+$form->get('tipo')->setAttributes([
+    'class' => 'form-control',
+    'rows' => 2
+]);
+
+$form->get('seleziona')->setAttributes(array('class' => 'btn btn-primary'));
+
+$form->prepare();
+?>
+
+<h1>Nuova polizza</h1>
+
+<?php if ($this->message) : ?><b><?= $this->message; ?></b><br><?php endif; ?>
+<div class="row">
+    <div class="input-field col-md-6">
+        <?= $this->form()->openTag($form); ?>
+
+        <?= $this->formElement($form->get('step')); ?>
+        
+        <div class="form-group">
+            <?= $this->formLabel($form->get('tipo')); ?>
+            <?= $this->formElement($form->get('tipo')); ?>
+            <?= $this->formElementErrors($form->get('tipo')); ?>
+        </div>
+
+
+        <div class="form-group">
+            <?= $this->formElement($form->get('seleziona')); ?>
+        </div>
+
+        <?= $this->formElement($form->get('csrf')); ?>
+
+        <?= $this->form()->closeTag(); ?>
+    </div>
+
+
+
+</div>

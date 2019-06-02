@@ -7,7 +7,7 @@ class PolizzaCasa extends AbstractModel
 {
     protected $mapping = [
         'id' => 'id',
-        'idpolizza' => 'id_polizza',
+        'idpolizza' => 'idpolizza',
         'citta' => 'citta',
         'cap' => 'cap',
         'indirizzo' => 'indirizzo',

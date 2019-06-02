@@ -9,12 +9,23 @@ class PolizzaForm extends Form
 
     public function addElements()
     {
+
         $this->add([
             'type' => 'hidden',
             'name' => 'step',
             'attributes' => [
-                'value' => '1',
+                'value' => 2,
             ],
+        ]);
+
+        $this->add([
+            'type' => 'hidden',
+            'name' => 'id',
+        ]);
+
+        $this->add([
+            'type' => 'hidden',
+            'name' => 'tipo',
         ]);
 
         $this->add([
@@ -35,7 +46,7 @@ class PolizzaForm extends Form
 
         $this->add([
             'type' => 'text',
-            'name' => 'data_emissione',
+            'name' => 'dataemissione',
             'options' => [
                 'label' => 'Data emissione',
             ],
@@ -43,7 +54,7 @@ class PolizzaForm extends Form
 
         $this->add([
             'type' => 'text',
-            'name' => 'data_scadenza',
+            'name' => 'datascadenza',
             'options' => [
                 'label' => 'Data scadenza',
             ],
@@ -133,7 +144,7 @@ class PolizzaForm extends Form
         ]);
 
         $inputFilter->add([
-            'name' => 'data_emissione',
+            'name' => 'dataemissione',
             'required' => true,
             'filters' => [],
             'validators' => [
@@ -148,7 +159,7 @@ class PolizzaForm extends Form
         ]);
 
         $inputFilter->add([
-            'name' => 'data_scadenza',
+            'name' => 'datascadenza',
             'required' => true,
             'filters' => [],
             'validators' => [
@@ -166,14 +177,15 @@ class PolizzaForm extends Form
             'name' => 'premio',
             'required' => true,
             'filters' => [],
-            'validators' => [
-                [
-                    'name' => 'Float',
-                    'options' => [
-                        'min' => 0.01,
-                    ],
-                ],
-            ],
+            // 'validators' => [
+            //     [
+            //         'name' => 'Float',
+            //         'locale' => 'it_IT',
+            //         'options' => [
+            //             'min' => 0.01,
+            //         ],
+            //     ],
+            // ],
         ]);
     }
 
